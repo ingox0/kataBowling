@@ -5,7 +5,6 @@ import org.junit.Test;
 
 public class BowlingLineTest {
 
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsOpen_NoMissesAndNoSparesAndNoStrikes() {
 		assertEquals(10*2, new BowlingLine("11 11 11 11 11 11 11 11 11 11").getScore());

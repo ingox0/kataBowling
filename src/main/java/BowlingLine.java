@@ -1,10 +1,13 @@
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 /**
  * This class represents a game of bowling.
  * @author ingox0
  */
 public class BowlingLine {
 
-	private String lineSequence;
+	private Stream<String> streamOfTurnStrings;
 	
 	
 	/**
@@ -12,7 +15,7 @@ public class BowlingLine {
 	 * @param lineSequences sequences of roles for this line
 	 */
 	public BowlingLine(String... lineSequences) {
-		lineSequence = String.join(" ", lineSequences);
+		streamOfTurnStrings = convertSequencesToStreamOfTurns(lineSequences);
 	}
 	
 	
@@ -21,6 +24,15 @@ public class BowlingLine {
 	 * @return the sum of points made in this line
 	 */
 	public int getScore() {
-		return 0;
+		return streamOfTurnStrings
+				.map(s -> Integer.parseInt(s))
+				.reduce(0, (a,b) -> a+b)
+				.intValue();
+	}
+	
+	private Stream<String> convertSequencesToStreamOfTurns(String[] lineSequences) {
+		return Arrays.stream(String.join("",lineSequences)
+				.replaceAll("\\s", "")
+				.split(""));
 	}
 }
