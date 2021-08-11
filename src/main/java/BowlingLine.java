@@ -25,8 +25,8 @@ public class BowlingLine {
 	 */
 	public int getScore() {
 		return streamOfTurnStrings
-				.map(s -> Integer.parseInt(s))
-				.reduce(0, (a,b) -> a+b)
+				.map(turnString -> parseStringOfTurnToPoints(turnString))
+				.reduce(0, (pointsA,pointsB) -> pointsA+pointsB)
 				.intValue();
 	}
 	
@@ -34,5 +34,9 @@ public class BowlingLine {
 		return Arrays.stream(String.join("",lineSequences)
 				.replaceAll("\\s", "")
 				.split(""));
+	}
+	private Integer parseStringOfTurnToPoints(String turnCharacter) {
+		try { return Integer.parseInt(turnCharacter); }
+		catch(NumberFormatException nfe) { return 0; }
 	}
 }

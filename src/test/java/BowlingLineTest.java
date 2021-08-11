@@ -12,7 +12,6 @@ public class BowlingLineTest {
 		assertEquals(10*9, new BowlingLine("18 18 27 36 45 54 63 72 72 81").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsOpen_MissesAndNoSparesAndNoStrikes() {
 		assertEquals(  45, new BowlingLine("-- 1- -2 35 -- -- 44 44 -9 9-").getScore());
