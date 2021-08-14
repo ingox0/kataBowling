@@ -25,7 +25,7 @@ public class BowlingLineTest {
 	public void testLastFrameIsOpen_StrikesAndNoSpares() {
 		assertEquals(       7*30 + 20 + 10 + 0, new BowlingLine("X  X X  X X X X  X X --").getScore());
 		assertEquals(12+2+14+4+30+28+18+8+17+7, new BowlingLine("X 2- X 4- X X X 8- X -7").getScore());
-		assertEquals(12+2+14+4+30+28+18+8+12+2, new BowlingLine("X -2 X -4 X X X -8 X 2-").getScore());
+		assertEquals(12+2+14+4+30+20+18+8+12+2, new BowlingLine("X -2 X -4 X X X -8 X 2-").getScore());
 		assertEquals(10+0+10+0+30+20+10+0+19+9, new BowlingLine("X -- X -- X X X -- X 27").getScore());
 	}
 	
