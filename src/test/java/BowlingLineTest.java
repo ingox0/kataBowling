@@ -1,4 +1,4 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -20,7 +20,6 @@ public class BowlingLineTest {
 		assertEquals(   0, new BowlingLine("-- -- -- -- -- -- -- -- -- --").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsOpen_StrikesAndNoSpares() {
 		assertEquals(       7*30 + 20 + 10 + 0, new BowlingLine("X  X X  X X X X  X X --").getScore());
@@ -29,7 +28,6 @@ public class BowlingLineTest {
 		assertEquals(10+0+10+0+30+20+10+0+19+9, new BowlingLine("X -- X -- X X X -- X 27").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsOpen_SparesAndNoStrikes() {
 		assertEquals(                    9*10 + 0, new BowlingLine("-/ -/ -/ -/ -/ -/ -/ -/ -/ --").getScore());
@@ -39,7 +37,6 @@ public class BowlingLineTest {
 		assertEquals(10+ 0+10+ 0+16+17+10+ 0+12+9, new BowlingLine("1/ -- 3/ -- 5/ 6/ 7/ -- 9/ 27").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsOpen_SparesAndStrikes() {
 		assertEquals(20+20+20+20+30+20+20+20+10+0, new BowlingLine("X  -/ X  -/ X  X  X  -/ X  --").getScore());

@@ -1,42 +1,45 @@
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
-/**
- * This class represents a game of bowling.
- * @author ingox0
- */
 public class BowlingLine {
 
-	private Stream<String> streamOfTurnStrings;
+	private final int NUMBER_OF_FRAMES = 10;
+	
+	private BowlingFrameSequence 	sequenceOfFrames = BowlingFrame.createSequenceOfFrames(NUMBER_OF_FRAMES);
+	private IntStream 				intStreamOfChars;
 	
 	
-	/**
-	 * Creates a new bowling line based on the given sequences of rolls.
-	 * @param lineSequences sequences of roles for this line
-	 */
 	public BowlingLine(String... lineSequences) {
-		streamOfTurnStrings = convertSequencesToStreamOfTurns(lineSequences);
+		intStreamOfChars = getIntStreamOfAllCharacters(lineSequences);
+		sequenceOfFrames.next();
+		processEachCharacterOfSequence();
 	}
 	
+	private IntStream getIntStreamOfAllCharacters(String... lineSequence) {
+		return String.join("", lineSequence)
+				.replaceAll("\\s","")
+				.chars();
+	}
+	private void processEachCharacterOfSequence() {
+		intStreamOfChars.forEach(charInt -> processCharacter((char)charInt));
+	}
+	private void processCharacter(char sequenceChar) {
+		proceedWithPoints(createParserForCurrentFrame().parseCharToPoints(sequenceChar));
+	}
+	private void proceedWithPoints(int numberOfPoints) {
+		sequenceOfFrames.getCurrentFrame().ifPresent(frame -> frame.informOfPointsRecursively(numberOfPoints));
+		sequenceOfFrames.getCurrentFrame().filter(frame -> frame.isCompleted() && sequenceOfFrames.hasNext())
+			.ifPresent(frame -> sequenceOfFrames.next());
+	}
+	private BowlingLineParser createParserForCurrentFrame() {
+		return new BowlingLineParser(sequenceOfFrames.getCurrentFrame().get());
+	}
 	
-	/**
-	 * Returns the total score of this line.
-	 * @return the sum of points made in this line
-	 */
 	public int getScore() {
-		return streamOfTurnStrings
-				.map(turnString -> parseStringOfTurnToPoints(turnString))
-				.reduce(0, (pointsA,pointsB) -> pointsA+pointsB)
-				.intValue();
+		final List<Integer> scores = new ArrayList<Integer>(NUMBER_OF_FRAMES);
+		sequenceOfFrames.forEachTraversed(frame -> scores.add(frame.getScore()));
+		return scores.stream().mapToInt(score -> score).sum();
 	}
-	
-	private Stream<String> convertSequencesToStreamOfTurns(String[] lineSequences) {
-		return Arrays.stream(String.join("",lineSequences)
-				.replaceAll("\\s", "")
-				.split(""));
-	}
-	private Integer parseStringOfTurnToPoints(String turnCharacter) {
-		try { return Integer.parseInt(turnCharacter); }
-		catch(NumberFormatException nfe) { return 0; }
-	}
+
 }
