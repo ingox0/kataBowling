@@ -1,10 +1,11 @@
+package turn;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class BowlingFrameTest {
+public class BowlingTurnFrameTest {
 
 	@Test
 	public void testScore_NoSparesAndNoStrikes_shouldAddUpThrows() {
@@ -28,7 +29,7 @@ public class BowlingFrameTest {
 		assertEquals(3, createFrame().informOfPointsRecursively(1,2).informOfPointsRecursively(3,4).getScore());
 	}
 	@Test
-	public void testScore_Strike_shouldReturnInScoreOf10() {
+	public void testScore_Strike_shouldReturnScoreOf10() {
 		assertEquals(10, createFrame().informOfPointsRecursively(10).getScore());
 	}
 	@Test
@@ -48,7 +49,7 @@ public class BowlingFrameTest {
 		assertEquals(17, createFrame().informOfPointsRecursively(10, 5,2).informOfPointsRecursively(7,1).getScore());
 	}
 	@Test
-	public void testScore_Spare_shouldReturnInScoreOf10() {
+	public void testScore_Spare_shouldReturnScoreOf10() {
 		assertEquals(10, createFrame().informOfPointsRecursively(0,10).getScore());
 		assertEquals(10, createFrame().informOfPointsRecursively(7,3).getScore());
 	}
@@ -97,10 +98,36 @@ public class BowlingFrameTest {
 	}
 	
 	@Test
+	public void testType_Strike_shouldReturnStrikeWhen10PinsInFirstThrow() {
+		assertEquals(TurnType.TYPE_STRIKE, createFrame().informOfPointsRecursively(10).getType());
+		assertEquals(TurnType.TYPE_STRIKE, createFrame().informOfPointsRecursively(10, 0).getType());
+		assertEquals(TurnType.TYPE_STRIKE, createFrame().informOfPointsRecursively(10, 7).getType());
+		assertEquals(TurnType.TYPE_STRIKE, createFrame().informOfPointsRecursively(10,10).getType());
+	}
+	@Test
+	public void testType_Spare_shouldReturnSpareWhen10PinsAfter2Throws() {
+		assertEquals(TurnType.TYPE_SPARE, createFrame().informOfPointsRecursively(0,10).getType());
+		assertEquals(TurnType.TYPE_SPARE, createFrame().informOfPointsRecursively(8, 2).getType());
+		assertEquals(TurnType.TYPE_SPARE, createFrame().informOfPointsRecursively(7,3, 0).getType());
+		assertEquals(TurnType.TYPE_SPARE, createFrame().informOfPointsRecursively(7,3, 5).getType());
+		assertEquals(TurnType.TYPE_SPARE, createFrame().informOfPointsRecursively(7,3,10).getType());
+	}
+	@Test
+	public void testType_NoSpareAndNoStrike_shouldReturnDefaultWhenNot10PinsAfter2Throws() {
+		assertEquals(TurnType.TYPE_DEFAULT, createFrame().informOfPointsRecursively(0,0).getType());
+		assertEquals(TurnType.TYPE_DEFAULT, createFrame().informOfPointsRecursively(0,2).getType());
+		assertEquals(TurnType.TYPE_DEFAULT, createFrame().informOfPointsRecursively(5,0).getType());
+		assertEquals(TurnType.TYPE_DEFAULT, createFrame().informOfPointsRecursively(5,2).getType());
+		assertEquals(TurnType.TYPE_DEFAULT, createFrame().informOfPointsRecursively(5,2, 0).getType());
+		assertEquals(TurnType.TYPE_DEFAULT, createFrame().informOfPointsRecursively(5,2, 7).getType());
+		assertEquals(TurnType.TYPE_DEFAULT, createFrame().informOfPointsRecursively(5,2,10).getType());
+	}
+	
+	@Test
 	public void testNumberOfRemainingPins_NoSparesAndNoStrikes_shouldReturnDifferenceTo10() {
 		assertEquals(10, createFrame().getNumberOfPinsRemaining());
-		assertEquals(10, createFrame().informOfPointsRecursively( 0).getNumberOfPinsRemaining());
-		assertEquals( 3, createFrame().informOfPointsRecursively( 7).getNumberOfPinsRemaining());
+		assertEquals(10, createFrame().informOfPointsRecursively(0).getNumberOfPinsRemaining());
+		assertEquals( 3, createFrame().informOfPointsRecursively(7).getNumberOfPinsRemaining());
 		assertEquals(10, createFrame().informOfPointsRecursively(0,0).getNumberOfPinsRemaining());
 		assertEquals( 3, createFrame().informOfPointsRecursively(5,2).getNumberOfPinsRemaining());
 		assertEquals( 0, createFrame().informOfPointsRecursively(8,2).getNumberOfPinsRemaining());
@@ -132,7 +159,8 @@ public class BowlingFrameTest {
 		assertEquals(0, createFrame().informOfPointsRecursively(7,3).informOfPointsRecursively(5,2).getNumberOfPinsRemaining());
 	}
 	
-	private BowlingFrame createFrame() {
-		return BowlingFrame.createSequenceOfFrames(2).next();
+	public BowlingTurn createFrame() {
+		return new TurnSequence(2).getCurrentTurn();
 	}
+
 }

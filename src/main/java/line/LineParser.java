@@ -1,13 +1,16 @@
-public class BowlingLineParser {
+package line;
+import turn.BowlingTurn;
+
+public class LineParser {
 
 	public final static char SIGN_SPARE 	= '/';
 	public final static char SIGN_STRIKE 	= 'X';
 	
-	private BowlingFrame frame;
+	private BowlingTurn turn;
 	
 	
-	public BowlingLineParser(BowlingFrame frame) {
-		this.frame = frame;
+	public LineParser(BowlingTurn turn) {
+		this.turn = turn;
 	}
 	
 	
@@ -18,6 +21,6 @@ public class BowlingLineParser {
 	}
 	private Integer parseNonNumberToPoints(char sequenceChar) {
 		return (sequenceChar==SIGN_STRIKE || sequenceChar==SIGN_SPARE) ?
-			frame.getNumberOfPinsRemaining() : 0;
+			turn.getNumberOfPinsRemaining() : 0;
 	}
 }

@@ -1,6 +1,6 @@
+package line;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class BowlingLineTest {
@@ -45,7 +45,6 @@ public class BowlingLineTest {
 		assertEquals( 3+ 0+14+ 9+16+ 6+ 7+20+19+9, new BowlingLine("12 -- 3/ 45 X  -6 7- 8/ X  9-").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsStrike_BonusStrikes2of2() {
 		// '2-of-2' requires both bonus turns to be a strike
@@ -55,7 +54,6 @@ public class BowlingLineTest {
 		assertEquals(9*30    + 30, new BowlingLine("X  X  X  X  X  X  X  X  X  X", "X X").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsStrike_BonusStrikes1of2() {
 		// '1-of-2' implies only the 1st bonus turn to be a strike
@@ -69,7 +67,6 @@ public class BowlingLineTest {
 		assertEquals(9*30    + 25, new BowlingLine("X  X  X  X  X  X  X  X  X  X", "X 5").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsStrike_BonusStrikes0of2() {
 		// '0-of-2' requires both bonus turns NOT to be a strike
@@ -83,7 +80,6 @@ public class BowlingLineTest {
 		assertEquals(8*30+22 + 15, new BowlingLine("X  X  X  X  X  X  X  X  X  X", "23").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsStrike_BonusResultsInSpare() {
 		// requires the first bonus turn NOT to be a strike
@@ -97,7 +93,6 @@ public class BowlingLineTest {
 		assertEquals(8*30+25 + 20, new BowlingLine("X  X  X  X  X  X  X  X  X  X", "5/").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsSpare_BonusStrikes1of1() {
 		// '1-of-1' requires the bonus turn to be a strike
@@ -107,7 +102,6 @@ public class BowlingLineTest {
 		assertEquals(7*30+29+20 + 20, new BowlingLine("X  X  X  X  X  X  X  X  X  9/", "X").getScore());
 	}
 	
-	@Ignore("not yet done")
 	@Test
 	public void testLastFrameIsSpare_BonusStrikes0of1() {
 		// '0-of-1' requires the bonus turn NOT to be a strike

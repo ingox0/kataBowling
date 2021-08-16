@@ -1,17 +1,27 @@
+package turn;
 
-public abstract class BowlingFrameType {
+public abstract class TurnType {
 
-	public final static BowlingFrameType RULE_STRIKE = new BowlingFrameType() {
+	public final static TurnType TYPE_STRIKE = new TurnType() {
 		@Override protected int getNumberOfForeignThrowsToRegard()	{ return 2; }
 		@Override public 	int getNumberOfThrowsToComplete()		{ return 1; }
 	};
-	public final static BowlingFrameType RULE_SPARE = new BowlingFrameType() {
+	public final static TurnType TYPE_SPARE = new TurnType() {
 		@Override protected int getNumberOfForeignThrowsToRegard()	{ return 1; }
 		@Override public 	int getNumberOfThrowsToComplete()		{ return 2; }
 	};
-	public final static BowlingFrameType RULE_DEFAULT = new BowlingFrameType() {
+	public final static TurnType TYPE_DEFAULT = new TurnType() {
 		@Override protected int getNumberOfForeignThrowsToRegard()	{ return 0; }
 		@Override public 	int getNumberOfThrowsToComplete()		{ return 2; }
+	};
+	
+	public final static TurnType TYPE_BONUS_AFTER_STRIKE = new TurnType() {
+		@Override protected int getNumberOfForeignThrowsToRegard() 	{ return 0; }
+		@Override public 	int getNumberOfThrowsToComplete() 		{ return 2; }
+	};
+	public final static TurnType TYPE_BONUS_AFTER_SPARE = new TurnType() {
+		@Override protected int getNumberOfForeignThrowsToRegard() 	{ return 0; }
+		@Override public 	int getNumberOfThrowsToComplete() 		{ return 1; }
 	};
 	
 	
@@ -24,5 +34,4 @@ public abstract class BowlingFrameType {
 	public boolean hasForeignThrowsToRegard() {
 		return getNumberOfForeignThrowsToRegard() > 0;
 	}
-
 }
