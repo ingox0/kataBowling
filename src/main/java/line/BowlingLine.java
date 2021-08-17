@@ -9,21 +9,22 @@ public class BowlingLine {
 
 	private final int NUMBER_OF_FRAMES = 10;
 	
-	private TurnSequence 	sequenceOfFrames = new TurnSequence(NUMBER_OF_FRAMES);
-	private IntStream 		intStreamOfChars;
+	private TurnSequence sequenceOfFrames = new TurnSequence(NUMBER_OF_FRAMES);
 	
 	
 	public BowlingLine(String... lineSequences) {
-		intStreamOfChars = getIntStreamOfAllCharacters(lineSequences);
-		processEachCharacterOfSequence();
+		processSequence(lineSequences);
 	}
 	
+	public void processSequence(String... lineSequence) {
+		processEachCharacterOfSequence(getIntStreamOfAllCharacters(lineSequence));
+	}
 	private IntStream getIntStreamOfAllCharacters(String... lineSequence) {
 		return String.join("", lineSequence)
 				.replaceAll("\\s","")
 				.chars();
 	}
-	private void processEachCharacterOfSequence() {
+	private void processEachCharacterOfSequence(IntStream intStreamOfChars) {
 		intStreamOfChars.forEach(charInt -> processCharacter((char)charInt));
 	}
 	private void processCharacter(char sequenceChar) {

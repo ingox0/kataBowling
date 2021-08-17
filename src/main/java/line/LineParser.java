@@ -3,6 +3,7 @@ import turn.BowlingTurn;
 
 public class LineParser {
 
+	public final static char SIGN_MISS 		= '-';
 	public final static char SIGN_SPARE 	= '/';
 	public final static char SIGN_STRIKE 	= 'X';
 	
@@ -14,13 +15,16 @@ public class LineParser {
 	}
 	
 	
-	public Integer parseCharToPoints(char sequenceChar) {
+	public Integer parseCharToPoints(char sequenceChar) throws IllegalArgumentException {
 		try { return Integer.parseInt(""+sequenceChar); }
 		catch(NumberFormatException nfe) {};
 		return parseNonNumberToPoints(sequenceChar);
 	}
-	private Integer parseNonNumberToPoints(char sequenceChar) {
-		return (sequenceChar==SIGN_STRIKE || sequenceChar==SIGN_SPARE) ?
-			turn.getNumberOfPinsRemaining() : 0;
+	private Integer parseNonNumberToPoints(char sequenceChar) throws IllegalArgumentException {
+		if(sequenceChar==SIGN_STRIKE || sequenceChar==SIGN_SPARE)
+			return turn.getNumberOfPinsRemaining();
+		if(sequenceChar==SIGN_MISS)
+			return 0;
+		throw new IllegalArgumentException("Invalid character: '"+sequenceChar+"'");
 	}
 }
